@@ -1,6 +1,5 @@
 import Post from "../Models/Post.js"
 import User from "../Models/User.js";
-import Location from "../Models/Location.js";
 
 export default async function (req, res) {
     try {

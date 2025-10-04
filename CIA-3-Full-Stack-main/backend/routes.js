@@ -5,13 +5,7 @@ import Get_user_by_id from "./route_controllers/Get_user_by_id.js";
 import Add_post from "./route_controllers/Add_post.js";
 import Get_post from "./route_controllers/Get_post.js";
 import Get_user_posts from "./route_controllers/Get_user_posts.js";
-import Update_post from "./route_controllers/Update_post.js";
 import Get_fyp from "./route_controllers/Get_fyp.js";
-import Add_location from "./route_controllers/Add_location.js";
-import Get_location from "./route_controllers/Get_location.js";
-import Delete_location from "./route_controllers/Delete_location.js";
-import Show_all_locations from "./route_controllers/Show_all_locations.js";
-import Update_location_rating from "./route_controllers/Update_location_rating.js"
 import Show_all_posts from "./route_controllers/Show_all_posts.js";
 import Login_check from "./route_controllers/Login_check.js";
 import Show_all_users from "./route_controllers/Show_all_users.js";
@@ -22,6 +16,10 @@ import Add_follower from "./route_controllers/Add_follower.js";
 import Get_post_by_id from "./route_controllers/Get_post_by_id.js"
 import Add_comment from "./route_controllers/Add_comment.js";
 import Add_like from "./route_controllers/Add_like.js";
+import Show_all_likes from "./route_controllers/Show_all_likes.js";
+import Show_post_likes from "./route_controllers/Show_post_likes";
+import Show_people_liked from "./route_controllers/Show_people_liked.js";
+import Remove_like from "./route_controllers/Remove_like.js";
 
 const router = express.Router();
 
@@ -36,11 +34,15 @@ router.post("/user/find_id", Get_user_id);
 router.post("/user/delete", Delete_user);
 router.post("/user/follow", Add_follower);
 router.get("/users", Show_all_users);
+router.get("/likes", Show_all_likes);
 router.get("/posts", Show_all_posts);
+router.get("/likes/:post_id", Show_post_likes);
+router.get("/likedBy/:post_id", Show_people_liked);
 router.get("/post/delete/:id", Delete_post);
 router.get("/user/:name", Get_user);
 router.get("/user_id/:id", Get_user_by_id);
 router.post("/post/add", Add_post);
+router.post("/post/add_like", Add_like);
 router.post("/posts/", Get_post);
 router.post("/post/:id", Get_post);
 router.get("/posts/:username", Get_user_posts);
@@ -49,10 +51,6 @@ router.post("/post/add", Add_post);
 router.get("/post/:id", Get_post_by_id);
 router.post("/post/add_comment", Add_comment);
 router.post("/post/add_like", Add_like);
-// router.post("/locations/add", Add_location);
-// router.get("/locations/:id", Get_location);
-// router.get("/locations/delete/:id", Delete_location);
-// router.get("/locations/update_rating/:id", Update_location_rating);
-// router.get("/locations/", Show_all_locations);
+router.post("/like/remove_like", Remove_like);
 
 export default router

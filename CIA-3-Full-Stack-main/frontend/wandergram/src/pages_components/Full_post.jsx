@@ -12,6 +12,8 @@ export default function FullPost() {
   const [postAuthor, setAuthor] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const [liked, doLike] = useState(false);
+
 
   useEffect(() => {
     async function loadData() {
@@ -25,6 +27,14 @@ export default function FullPost() {
           let author = (
             await axios.get("http://localhost:5002/user_id/" + data.user)
           ).data.username;
+          let likes = await axios.get(`http://localhost:5002/likedBy/${id}`);
+          if (likes.data.Users.includes(user)){
+            doLike(true);
+          }
+          else {
+            doLike(false);
+          }
+          
           setAuthor(author);
           setPost(data);
         }
@@ -34,7 +44,7 @@ export default function FullPost() {
       setLoaded(true);
     }
     loadData();
-  }, [id]);
+  }, [id, user, isLoggedIn, liked]);
 
   if (!loaded) {
     return (
@@ -114,15 +124,30 @@ export default function FullPost() {
 
         {/* Interaction buttons (social feel) */}
         <div className="flex justify-around items-center py-4 border-t border-gray-700 bg-black/30">
-          <button className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full shadow-lg text-white transition">
-            👍 Like
+          {!isLoggedIn ? (<div>Login first to interact with the post</div>):(<div><button className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full shadow-lg text-white transition " onClick={async function () {
+              let user_id = (await axios.get(`http://localhost:5002/user/${user}`)).data._id
+              if (!liked) {
+                await axios.post("http://localhost:5002/post/add_like", {
+                  "user_id": user_id,
+                  "post_id": id
+                });
+                doLike(true);
+              } else {
+                await axios.post("http://localhost:5002/like/remove_like", {
+                  "user_id": user_id,
+                  "post_id": id
+                });
+                doLike(false);
+              }
+            }}>
+            {liked ? (<div>👎</div>) : (<div>👍 </div>)}
           </button>
-          <button className="px-6 py-2 bg-pink-600 hover:bg-pink-500 rounded-full shadow-lg text-white transition">
+          <button className="ml-3 px-6 py-2 bg-pink-600 hover:bg-pink-500 rounded-full shadow-lg text-white transition">
             💬 Comment
           </button>
-          <button className="px-6 py-2 bg-green-600 hover:bg-green-500 rounded-full shadow-lg text-white transition">
+          <button className="ml-3 px-6 py-2 bg-green-600 hover:bg-green-500 rounded-full shadow-lg text-white transition">
             ↗️ Share
-          </button>
+          </button></div>)}
         </div>
       </motion.div>
     </div>
