@@ -8,7 +8,7 @@ import { Link, useParams } from 'react-router';
 export const Profile = (props) => {
   // User who's profile we viewing
   let { username } = useParams();
-
+  
   // User that is logged in currently
   const { user, isLoggedIn } = useContext(AuthContext);
 
@@ -24,6 +24,7 @@ export const Profile = (props) => {
         setEmpty(true);
       }
       else {
+        setEmpty(false);
         setPosts(data);
       }
       setLoaded(true);
