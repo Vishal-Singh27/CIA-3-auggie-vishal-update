@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useParams } from "react-router";
-import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router';
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "./Context";
 import { motion } from "framer-motion";
 
@@ -13,7 +14,8 @@ export default function FullPost() {
   const [loaded, setLoaded] = useState(false);
   const [empty, setEmpty] = useState(false);
   const [liked, doLike] = useState(false);
-
+  const [comments, add_comment] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
@@ -34,7 +36,11 @@ export default function FullPost() {
           else {
             doLike(false);
           }
-          
+
+          // Loading the comments
+          let comments = await axios.get(`http://localhost:5002/comments/${id}`);
+          add_comment(comments.data);
+
           setAuthor(author);
           setPost(data);
         }
@@ -42,9 +48,10 @@ export default function FullPost() {
         console.error("Error loading post:", err);
       }
       setLoaded(true);
+      
     }
     loadData();
-  }, [id, user, isLoggedIn, liked]);
+  }, [id, user, isLoggedIn, liked, comments]);
 
   if (!loaded) {
     return (
@@ -142,14 +149,22 @@ export default function FullPost() {
             }}>
             {liked ? (<div>👎</div>) : (<div>👍 </div>)}
           </button>
-          <button className="ml-3 px-6 py-2 bg-pink-600 hover:bg-pink-500 rounded-full shadow-lg text-white transition">
+          <button className="ml-3 px-6 py-2 bg-pink-600 hover:bg-pink-500 rounded-full shadow-lg text-white transition" onClick={() => navigate(`/add_comment/${id}`)}>
             💬 Comment
           </button>
           <button className="ml-3 px-6 py-2 bg-green-600 hover:bg-green-500 rounded-full shadow-lg text-white transition">
             ↗️ Share
           </button></div>)}
         </div>
+        {/* comments */}
+        <div>
+          {comments.map(comment => (<div key={comment._id}> Comment By: {comment.username} Comment: {comment.comment} <button onClick={async () => {
+            axios.post("http://localhost:5002/comments/delete", {"id": comment._id});
+            add_comment([]);
+          }}>Delete</button></div>))}
+        </div>
       </motion.div>
     </div>
   );
+
 }

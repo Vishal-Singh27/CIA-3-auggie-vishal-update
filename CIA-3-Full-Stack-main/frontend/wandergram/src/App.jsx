@@ -15,6 +15,7 @@ import { Add_post } from './pages_components/Add_post'
 import { Profile } from './pages_components/Profile'
 import { Settings } from './pages_components/Settings'
 import FullPost from './pages_components/Full_post'
+import { Add_comment } from './pages_components/Add_Comment';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +34,7 @@ function App() {
             <Route path="/login" element={<Login className="flex fixed"/>}/>
             <Route path="/signup" element={<Signup className="flex fixed"/>}/>
             <Route path="/add_post" element={<Add_post className="flex fixed"/>}/>
+            <Route path="/add_comment/:id" element={<Add_comment className="flex fixed"/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/profile/:username" element={<Profile/>}/>
             <Route path="/settings" element={<Settings/>}/>

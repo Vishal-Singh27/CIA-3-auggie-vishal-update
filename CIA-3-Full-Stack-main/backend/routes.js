@@ -20,6 +20,9 @@ import Show_all_likes from "./route_controllers/Show_all_likes.js";
 import Show_post_likes from "./route_controllers/Show_post_likes";
 import Show_people_liked from "./route_controllers/Show_people_liked.js";
 import Remove_like from "./route_controllers/Remove_like.js";
+import Get_all_comments from "./route_controllers/Get_all_comments.js";
+import Get_post_comments from "./route_controllers/Get_post_comments.js";
+import Delete_comment from "./route_controllers/Delete_comment.js";
 
 const router = express.Router();
 
@@ -52,5 +55,9 @@ router.get("/post/:id", Get_post_by_id);
 router.post("/post/add_comment", Add_comment);
 router.post("/post/add_like", Add_like);
 router.post("/like/remove_like", Remove_like);
+router.get("/comments", Get_all_comments);
+router.get("/comments/:post_id", Get_post_comments);
+router.post("/comments/add", Add_comment);
+router.post("/comments/delete", Delete_comment);
 
 export default router

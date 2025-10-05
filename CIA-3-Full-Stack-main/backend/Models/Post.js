@@ -15,11 +15,6 @@ const postSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        like: {
-            type: Number,
-            default: 0
-        },
-        comments: [String],
         picture: String,
         rating: {
             type: Number,

@@ -39,7 +39,7 @@ export const Profile = (props) => {
         )
       else 
         return (
-          <div className='h-svh flex-wrap'>
+          <div className=' flex-wrap'>
             {posts.map(post => (
               <Post data={post} className="" />
             ))}
