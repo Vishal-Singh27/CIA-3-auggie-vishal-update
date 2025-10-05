@@ -96,9 +96,11 @@ export const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
             >
               {isLoggedIn && <li><Link to={`/profile/${user}`}>Profile</Link></li>}
+              {isLoggedIn && <li> <Link to="/user/liked">Liked Posts</Link></li>}
               {isLoggedIn && <li><Link to="/settings">Settings</Link></li>}
-              {isLoggedIn ? (
+              {isLoggedIn ? (<div>
                 <li><a onClick={() => logout()}>Logout</a></li>
+                </div>
               ) : (
                 <>
                   <li><Link to="/login">Login</Link></li>

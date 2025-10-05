@@ -25,6 +25,7 @@ import Get_post_comments from "./route_controllers/Get_post_comments.js";
 import Delete_comment from "./route_controllers/Delete_comment.js";
 import Show_followers from "./route_controllers/Show_followers.js";
 import Remove_follower from "./route_controllers/Remove_follower.js";
+import Liked_posts from "./route_controllers/Liked_posts.js";
 
 const router = express.Router();
 
@@ -58,6 +59,7 @@ router.post("/post/add", Add_post);
 router.get("/post/:id", Get_post_by_id);
 router.post("/post/add_comment", Add_comment);
 router.post("/post/add_like", Add_like);
+router.get("/posts/liked/:username", Liked_posts);
 router.post("/like/remove_like", Remove_like);
 router.get("/comments", Get_all_comments);
 router.get("/comments/:post_id", Get_post_comments);

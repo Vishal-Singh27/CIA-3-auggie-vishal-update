@@ -16,6 +16,7 @@ import { Profile } from './pages_components/Profile'
 import { Settings } from './pages_components/Settings'
 import FullPost from './pages_components/Full_post'
 import { Add_comment } from './pages_components/Add_Comment';
+import { Liked_posts } from './pages_components/Liked_posts';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,6 +31,7 @@ function App() {
           <AnimatePresence mode="wait">
           <Routes>
             <Route path='/' element={<Homepage className="mt-4 flex fixed"/>}/>
+            <Route path='/user/liked' element={<Liked_posts className="mt-4 flex fixed"/>}/>
             <Route path='/post/:id' element={<FullPost className="mt-4 flex fixed h-screen"/>}/>
             <Route path="/login" element={<Login className="flex fixed"/>}/>
             <Route path="/signup" element={<Signup className="flex fixed"/>}/>
