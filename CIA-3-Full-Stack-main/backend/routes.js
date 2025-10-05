@@ -45,7 +45,7 @@ router.get("/likes", Show_all_likes);
 router.get("/posts", Show_all_posts);
 router.get("/likes/:post_id", Show_post_likes);
 router.get("/likedBy/:post_id", Show_people_liked);
-router.get("/post/delete/:id", Delete_post);
+router.post("/post/delete/", Delete_post);
 router.get("/user/:name", Get_user);
 router.get("/user_id/:id", Get_user_by_id);
 router.post("/post/add", Add_post);

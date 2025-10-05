@@ -35,7 +35,7 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-black bg-opacity-80 shadow-sm px-4 h-20 flex items-center z-10">
+    <div className="navbar bg-black bg-opacity-80 shadow-sm px-4 h-20 flex items-center">
       {/* Left side with logo */}
       <div className="flex-1 flex items-center gap-2">
         <Link to="/" className="flex items-center gap-2">

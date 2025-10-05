@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "./Context";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export default function FullPost() {
   let { id } = useParams();
@@ -154,12 +155,22 @@ export default function FullPost() {
           </button>
           <button className="ml-3 px-6 py-2 bg-green-600 hover:bg-green-500 rounded-full shadow-lg text-white transition">
             ↗️ Share
-          </button></div>)}
+          </button>
+          {user == postAuthor ? (<button className="ml-3 px-6 py-2 bg-red-400 hover:bg-red-450 rounded-full shadow-lg text-white transition" onClick={async () => {
+            await axios.post("http://localhost:5002/post/delete", {"id": id});
+            toast.success("Post Removed");
+            navigate(`/profile/${user}`);
+          }}>
+            ❌ Delete Post
+          </button>) : null}
+          
+          </div>)}
         </div>
         {/* comments */}
         <div>
           {comments.map(comment => (<div key={comment._id}> Comment By: {comment.username} Comment: {comment.comment} <button onClick={async () => {
-            axios.post("http://localhost:5002/comments/delete", {"id": comment._id});
+            await axios.post("http://localhost:5002/comments/delete", {"id": comment._id});
+            toast.success("Comment Deleted");
             add_comment([]);
           }}>Delete</button></div>))}
         </div>
