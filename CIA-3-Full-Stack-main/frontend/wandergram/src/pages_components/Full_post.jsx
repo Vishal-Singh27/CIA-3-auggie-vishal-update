@@ -141,7 +141,7 @@ export default function FullPost() {
                 });
                 doLike(true);
               } else {
-                await axios.post("http://localhost:5002/like/remove_like", {
+                await axios.post("http://localhost:5173/post/" + id, {
                   "user_id": user_id,
                   "post_id": id
                 });
@@ -153,7 +153,10 @@ export default function FullPost() {
           <button className="ml-3 px-6 py-2 bg-pink-600 hover:bg-pink-500 rounded-full shadow-lg text-white transition" onClick={() => navigate(`/add_comment/${id}`)}>
             💬 Comment
           </button>
-          <button className="ml-3 px-6 py-2 bg-green-600 hover:bg-green-500 rounded-full shadow-lg text-white transition">
+          <button className="ml-3 px-6 py-2 bg-green-600 hover:bg-green-500 rounded-full shadow-lg text-white transition" onClick={() => {
+            navigator.clipboard.writeText(window.location.href)
+            toast.success("Post link copied to clipboard");
+          }}>
             ↗️ Share
           </button>
           {user == postAuthor ? (<button className="ml-3 px-6 py-2 bg-red-400 hover:bg-red-450 rounded-full shadow-lg text-white transition" onClick={async () => {
