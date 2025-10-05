@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useNavigate } from 'react-router';
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "./Context";
@@ -107,7 +107,7 @@ export default function FullPost() {
 
           <div className="flex flex-wrap gap-6 mb-6">
             <span className="px-4 py-2 bg-gray-800 rounded-lg">
-              👤 Posted by: <b>{postAuthor}</b>
+              👤 Posted by: <Link to={`/profile/${postAuthor}`}><b className="underline">{postAuthor}</b></Link>
             </span>
             <span className="px-4 py-2 bg-gray-800 rounded-lg">
               ⭐ {post.rating} / 5
