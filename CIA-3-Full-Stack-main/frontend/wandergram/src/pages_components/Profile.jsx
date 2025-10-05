@@ -15,6 +15,7 @@ export const Profile = (props) => {
   const [posts, setPosts] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const [following, isFollowing] = useState(false);
 
   useEffect(() => {
     async function load_data() {
@@ -24,13 +25,16 @@ export const Profile = (props) => {
         setEmpty(true);
       }
       else {
+        let follower_res = await axios.get(`http://localhost:5002/user/followers/${username}`)
+        let followers = follower_res.data.Followers;
+        (followers.includes(user)) ? isFollowing(true) : isFollowing(false);
         setEmpty(false);
         setPosts(data);
       }
       setLoaded(true);
     }
     load_data();
-  }, [username])
+  }, [username, user])
   
     if (loaded){
       if (empty)
@@ -39,10 +43,19 @@ export const Profile = (props) => {
         )
       else 
         return (
-          <div className=' flex-wrap'>
-            {posts.map(post => (
-              <Post data={post} className="" />
-            ))}
+          <div>
+            {user == username ? null : (<div>{following ? (<button onClick={async () => {
+              await axios.post(`http://localhost:5002/user/${username}/unfollow`, {"username" : user});
+              isFollowing(false);
+            }}>Unfollow</button>) : (<button onClick={async () => {
+              await axios.post(`http://localhost:5002/user/${username}/follow`, {"username" : user});
+              isFollowing(true);
+            }}>Follow {following}</button>)}</div>)}
+            <div className=' flex-wrap'>
+              {posts.map(post => (
+                <Post data={post} className="" />
+              ))}
+            </div>
           </div>
         )
     }
